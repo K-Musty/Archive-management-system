@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="container">
             <h2>Login to Electronic Archive</h2>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-                <?php if (!empty($error)) echo "<p style='color: red;'>$error</p>"; ?>
+                <?php if (!empty($error)) echo "<p style='color: red;text-align:center;'>$error</p>"; ?>
                 <input type="email" name="email" required placeholder="Enter Email">
                 <input type="password" name="password" required placeholder="Enter Password">
                 <button type="submit" class="btn">Login</button>
