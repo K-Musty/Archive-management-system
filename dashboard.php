@@ -76,7 +76,7 @@ $result = $stmt->get_result();
                                 <img src="icons/<?php echo htmlspecialchars($row["file_type"]); ?>" alt="icon" class="icon">
                             </td>
                             <td><?php echo htmlspecialchars($row["filename"]); ?></td>
-                            <td><?php echo htmlspecialchars($row["metadata"]); ?></td>
+                            <td><?php echo strlen($row["metadata"]) > 90 ? $row["metadata"] : $row["metadata"] ; ?></td>
                             <td><?php echo date("d M Y, H:i", strtotime($row["uploaded_at"])); ?></td>
                             <td><a href="<?php echo $row["filepath"]; ?>" download class="btn btn-download">Download</a></td>
                         </tr>
