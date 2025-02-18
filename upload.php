@@ -1,37 +1,48 @@
 <?php
-include '_Nav.php';
-include './conn.php';
+session_start();
+include("db.php");
 
-$targetDir = "uploads/"; // Directory to store uploaded files
-
-// Check if the directory exists, if not, create it
-if (!is_dir($targetDir)) {
-    mkdir($targetDir, 0755, true); // Creates the directory with permissions
+if (!isset($_SESSION["user_id"])) {
+    header("Location: index.php");
+    exit();
 }
 
-if (isset($_POST['upload'])) {
-    $fileName = basename($_FILES['file']['name']);
-    $targetFilePath = $targetDir . $fileName;
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["file"])) {
+    $file_name = $_FILES["file"]["name"];
+    $file_tmp = $_FILES["file"]["tmp_name"];
+    $file_size = $_FILES["file"]["size"];
+    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    $allowed_exts = ["pdf", "jpg", "jpeg", "png", "gif", "mp3", "wav", "mp4", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt"];
 
-    // Check if file was uploaded
-    if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
-        // Escape the filename and path to prevent SQL injection
-        $fileNameEscaped = $conn->real_escape_string($fileName);
-        $targetFilePathEscaped = $conn->real_escape_string($targetFilePath);
+    if (!in_array($file_ext, $allowed_exts)) {
+        echo "Invalid file type. Allowed types: PDF, images, audio, video, documents.";
+        exit();
+    }
 
-        // Insert file info into the database
-        $sql = "INSERT INTO uploads (file_name, file_path) VALUES ('$fileNameEscaped', '$targetFilePathEscaped')";
-        if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('The file " . htmlspecialchars($fileName) . " has been uploaded successfully!');</script>";
-            header('location:view_files.php');
-        } else {
-            echo "Database error: " . $conn->error;
-        }
+    if ($file_size > 50 * 1024 * 1024) { // 50MB file limit
+        echo "File too large. Maximum allowed size is 50MB.";
+        exit();
+    }
 
-        // Close the database connection
-        $conn->close();
+    $upload_dir = "uploads/" . basename($file_name);
+
+    if (move_uploaded_file($file_tmp, $upload_dir)) {
+        $metadata = $_POST["metadata"];
+        $user_id = $_SESSION["user_id"];
+        $sql = "INSERT INTO documents (user_id, filename, filepath, metadata) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("isss", $user_id, $file_name, $upload_dir, $metadata);
+        $stmt->execute();
+        echo "Upload successful!";
     } else {
-        echo "There was an error uploading your file.";
+        echo "Error uploading file.";
     }
 }
-include './_Footer.php'; ?>
+?>
+
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required>
+    <textarea name="metadata" placeholder="Enter metadata (tags, keywords, etc.)"></textarea>
+    <button type="submit">Upload</button>
+</form>
+
