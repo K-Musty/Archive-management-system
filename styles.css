@@ -8,6 +8,12 @@
     --button-hover: #006666;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     background: var(--secondary-color);
@@ -15,14 +21,30 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
     flex-direction: column;
-    margin: 0;
 }
 
-h2 {
+main {
+    width: 80%;
+    margin: auto;
+    /* background-color: red; */
+}
+
+.container {
+    width: 80px;
+    margin: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+.header {
+    margin-top: 13rem;
+    width: 100%;
+    background-color: red;
+}
+
+form h2, h2 {
     color: var(--primary-color);
-    font-size: 28px;
+    font-size: 28px;text-align: center;
     margin-bottom: 15px;
 }
 
@@ -30,15 +52,20 @@ form {
     background: #fff;
     padding: 30px;
     border-radius: 10px;
+    width: 80%;
+    margin: auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 320px;
-    text-align: center;
 }
 
-input {
-    width: 90%;
+.form-bottom-content {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.input, input, textarea {
+    width: 100%;
     padding: 12px;
-    margin: 10px 0;
+    margin: 12px 0;
     border: 1px solid var(--input-border);
     border-radius: 5px;
     background: var(--input-bg);
@@ -80,7 +107,7 @@ select {
 }
 
 
-button {
+.btn {
     background: var(--primary-color);
     color: #fff;
     border: none;
@@ -88,11 +115,12 @@ button {
     font-size: 18px;
     border-radius: 5px;
     cursor: pointer;
+    display: block;
     width: 100%;
     transition: 0.3s;
 }
 
-button:hover {
+.btn:hover {
     background: var(--button-hover);
 }
 
@@ -127,7 +155,7 @@ a:hover {
     background: var(--button-hover);
 }
 
-header {
+.header {
     background: linear-gradient(135deg, var(--primary-color), var(--button-hover));
     color: white;
     text-align: center;
@@ -137,23 +165,23 @@ header {
     position: relative;
 }
 
-header h1 {
+.header h1 {
     font-size: 36px;
     margin-bottom: 10px;
     font-weight: 600;
 }
 
-header p {
+.header p {
     font-size: 18px;
     opacity: 0.8;
     margin-bottom: 15px;
 }
 
-header nav {
+.header nav {
     margin-top: 15px;
 }
 
-header .btn {
+.header .btn {
     padding: 12px 20px;
     background: white;
     color: var(--primary-color);
@@ -166,13 +194,10 @@ header .btn {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-header .btn:hover {
+.header .btn:hover {
     background: var(--accent-color);
     color: white;
 }
-
-
-
 
 nav .btn {
     display: inline-block;
@@ -186,12 +211,12 @@ nav .btn {
     transition: 0.3s;
 }
 
-nav .btn:hover {
+.btn:hover {
     background: var(--button-hover);
     color: white;
 }
 
-nav .btn-danger {
+.btn-danger {
     background: var(--danger-color);
     color: white;
 }
@@ -305,4 +330,14 @@ th {
 
 .search-form .btn-search:hover {
     background: var(--button-hover);
+}
+
+#why-choose-us {
+    padding: 30px;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 20px;
 }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("db.php");
+require __DIR__ . '/db.php';
 
 if (!isset($_SESSION["user_id"]) || $_SESSION["role"] != "user") {
     header("Location: index.php");
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
     $search_param = "%" . $search_query . "%";
     $stmt->bind_param("iss", $user_id, $search_param, $search_param);
 } else {
-    $sql = "SELECT filename, filepath, metadata, uploaded_at FROM documents WHERE user_id = ?";
+    $sql = "SELECT filename, filepath, metadata, uploaded_at, file_type FROM documents WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
 }
@@ -31,6 +31,7 @@ $result = $stmt->get_result();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,6 +39,7 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <header>
         <h1>Welcome, <?php echo htmlspecialchars($username); ?>!</h1>
@@ -60,6 +62,7 @@ $result = $stmt->get_result();
             <table>
                 <thead>
                     <tr>
+                        <th>Icon</th>
                         <th>Filename</th>
                         <th>Metadata</th>
                         <th>Uploaded Date</th>
@@ -69,6 +72,9 @@ $result = $stmt->get_result();
                 <tbody>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
+                            <td>
+                                <img src="uploads/<?php echo htmlspecialchars($row["file_type"]); ?>" alt="icon" class="icon">
+                            </td>
                             <td><?php echo htmlspecialchars($row["filename"]); ?></td>
                             <td><?php echo htmlspecialchars($row["metadata"]); ?></td>
                             <td><?php echo date("d M Y, H:i", strtotime($row["uploaded_at"])); ?></td>
@@ -83,5 +89,5 @@ $result = $stmt->get_result();
     </section>
 
 </body>
-</html>
 
+</html>

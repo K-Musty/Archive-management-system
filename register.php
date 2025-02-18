@@ -1,5 +1,5 @@
 <?php
-include("db.php");
+require __DIR__ . '/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,18 +29,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
+    <main></main>
     <h2>Electronic Archive Signup</h2>
 
     <form method="post">
-    <input type="text" name="username" required placeholder="Username">
-    <input type="email" name="email" required placeholder="Email">
-    <input type="password" name="password" required placeholder="Password">
-    <button type="submit">Register</button>
-</form>
+        <input type="text" name="username" required placeholder="Username">
+        <input type="email" name="email" required placeholder="Email">
+        <input type="password" name="password" required placeholder="Password">
+        <button type="submit" class="btn">Register</button>
+    </form>
 
     <p>Already have an account? <a href="login.php">Login</a></p>
 </body>
+
 </html>
-
-

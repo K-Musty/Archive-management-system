@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("db.php");
+require __DIR__ . '/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
@@ -27,12 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <h2>Admin Login</h2>
 
@@ -45,5 +47,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <p><a href="login.php">User Login</a></p>
 </body>
-</html>
 
+</html>
