@@ -1,6 +1,9 @@
 <?php
 require __DIR__ . '/db.php';
 
+$message = "";
+$error = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $email = $_POST["email"];
@@ -12,9 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssss", $username, $email, $password, $role);
 
     if ($stmt->execute()) {
-        echo "Registration successful! <a href='login.php'>Login here</a>";
+        $message = "Registration successful! <a href='login.php'>Login here</a>";
     } else {
-        echo "Error: " . $stmt->error;
+        $error = "Error: " . $stmt->error;
     }
 }
 ?>
@@ -31,17 +34,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <main></main>
-    <h2>Electronic Archive Signup</h2>
+    <main>
+        
+        <h2 style="margin-top: 30px;">Electronic Archive Signup</h2>
+        <form method="post">
+            <div style="text-align: center;">
+                <p style="color: green;"><?= isset($message) ? $message : "" ?></p>
+                <p style="color: red;"><?= isset($error) ? $error : "" ?></p>
+            </div>
+            <input type="text" name="username" required placeholder="Username">
+            <input type="email" name="email" required placeholder="Email">
+            <input type="password" name="password" required placeholder="Password">
+            <button type="submit" class="btn">Register</button>
+            <p style="text-align: center;">Already have an account? <a href="login.php">Login</a></p>
+        </form>
 
-    <form method="post">
-        <input type="text" name="username" required placeholder="Username">
-        <input type="email" name="email" required placeholder="Email">
-        <input type="password" name="password" required placeholder="Password">
-        <button type="submit" class="btn">Register</button>
-    </form>
-
-    <p>Already have an account? <a href="login.php">Login</a></p>
+    </main>
 </body>
 
 </html>
