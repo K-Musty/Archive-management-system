@@ -73,7 +73,7 @@ $result = $stmt->get_result();
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
                             <td>
-                                <img src="uploads/<?php echo htmlspecialchars($row["file_type"]); ?>" alt="icon" class="icon">
+                                <img src="icons/<?php echo htmlspecialchars($row["file_type"]); ?>" alt="icon" class="icon">
                             </td>
                             <td><?php echo htmlspecialchars($row["filename"]); ?></td>
                             <td><?php echo htmlspecialchars($row["metadata"]); ?></td>

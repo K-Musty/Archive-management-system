@@ -60,7 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["file"])) {
                 <select name="file_type" class="input">
                     <option value="photo.png">Photo</option>
                     <option value="text.png">Text</option>
-                    <option value="document.png">Document(Word)</option>
+                    <option value="docx.png">Document(Word)</option>
+                    <option value="doc.png">Document(Google)</option>
                     <option value="spreadsheet.png">Spreadsheet(Excel)</option>
                     <option value="pdf.png">PDF</option>
                     <option value="video.png">Video</option>
