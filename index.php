@@ -15,7 +15,7 @@
         <div class="header">
             <h1>Welcome to the Electronic Archive System</h1>
             <p>Securely store, search, and retrieve your digital documents with ease.</p>
-            <div style="display: flex;justify-content: center;flex-wrap: wrap;">
+            <div style="display: flex;">
                 <a href="login.php" class="btn">Login</a>
                 <a href="register.php" class="btn">Sign Up</a>
             </div>

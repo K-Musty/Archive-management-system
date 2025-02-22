@@ -38,12 +38,17 @@ $result = $stmt->get_result();
     <title>Dashboard</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Monstserrat';
+        }
+    </style>
 </head>
 
 <body>
-    <header>
-        <h1>Welcome, <?php echo htmlspecialchars($username); ?>!</h1>
-        <nav>
+    <header style="width: 80%;margin: auto;text-align: center;background-color: #008080;">
+        <h1>Welcome, <?php echo htmlspecialchars(ucfirst($username)); ?>!</h1>
+        <nav style="display: flex;">
             <a href="upload.php" class="btn">Upload Document</a>
             <a href="logout.php" class="btn btn-danger">Logout</a>
         </nav>
@@ -55,7 +60,7 @@ $result = $stmt->get_result();
         <!-- Search Form -->
         <form method="post" class="search-form">
             <input type="text" name="search" placeholder="Search by filename or metadata..." value="<?php echo htmlspecialchars($search_query); ?>">
-            <button type="submit" class="btn btn-search">Search</button>
+            <button type="submit" class="btn-search">Search</button>
         </form>
 
         <?php if ($result->num_rows > 0): ?>
@@ -76,7 +81,7 @@ $result = $stmt->get_result();
                                 <img src="icons/<?php echo htmlspecialchars($row["file_type"]); ?>" alt="icon" class="icon">
                             </td>
                             <td><?php echo htmlspecialchars($row["filename"]); ?></td>
-                            <td><?php echo strlen($row["metadata"]) > 90 ? $row["metadata"] : $row["metadata"] ; ?></td>
+                            <td><?php echo strlen($row["metadata"]) > 90 ? $row["metadata"] : $row["metadata"]; ?></td>
                             <td><?php echo date("d M Y, H:i", strtotime($row["uploaded_at"])); ?></td>
                             <td><a href="<?php echo $row["filepath"]; ?>" download class="btn btn-download">Download</a></td>
                         </tr>

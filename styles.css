@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 /* Define theme color as a variable */
 :root {
     --primary-color: #008080;  /* Teal */
     --secondary-color: #F8F9FA; /* Off-white */
     --accent-color: #404E5C;  /* Deep Gray */
     --text-color: #333;
-    --input-bg: #EFEFEF;
+    --input-bg: #f3f3f3;
     --button-hover: #006666;
 }
 
@@ -25,19 +27,18 @@ body {
 }
 
 main {
-    width: 80%;
     margin: auto;
     /* background-color: red; */
 }
 
 .container {
-    width: 80px;
+    width: 80%;
     margin: auto;
     padding-left: 2rem;
     padding-right: 2rem;
 }
 .header {
-    margin-top: 13rem;
+    margin: 3rem 0;
     width: 100%;
     background-color: red;
 }
@@ -52,9 +53,8 @@ form {
     background: #fff;
     padding: 30px;
     border-radius: 10px;
-    width: 80%;
+    max-width: 800px;
     margin: auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-bottom-content {
@@ -69,7 +69,7 @@ form {
     border: 1px solid var(--input-border);
     border-radius: 5px;
     background: var(--input-bg);
-    font-size: 16px;
+    font-size: 14px;
 }
 
 select {
@@ -290,6 +290,7 @@ th {
     padding: 8px 12px;
     background: var(--primary-color);
     color: white;
+    text-align: center;
     text-decoration: none;
     border-radius: 4px;
     font-size: 14px;
@@ -309,21 +310,22 @@ th {
 
 .search-form input {
     width: 60%;
-    padding: 10px;
     border: 1px solid var(--accent-color);
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
     background: var(--input-bg);
+    padding: 15px 10px;
 }
 
 .search-form .btn-search {
-    padding: 10px 15px;
+    width: 30%;
     background: var(--primary-color);
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
     margin-left: 10px;
+    display: block;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -341,3 +343,4 @@ th {
     height: 50px;
     border-radius: 20px;
 }
+

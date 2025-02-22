@@ -35,19 +35,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <main>
-        
-        <h2 style="margin-top: 30px;">Electronic Archive Signup</h2>
-        <form method="post">
-            <div style="text-align: center;">
-                <p style="color: green;"><?= isset($message) ? $message : "" ?></p>
-                <p style="color: red;"><?= isset($error) ? $error : "" ?></p>
-            </div>
-            <input type="text" name="username" required placeholder="Username">
-            <input type="email" name="email" required placeholder="Email">
-            <input type="password" name="password" required placeholder="Password">
-            <button type="submit" class="btn">Register</button>
-            <p style="text-align: center;">Already have an account? <a href="login.php">Login</a></p>
-        </form>
+        <div class="container">
+            <form method="post">
+                <h2 style="margin-top: 30px;">Electronic Archive Signup</h2>
+                <div style="text-align: center;">
+                    <p style="color: green;"><?= isset($message) ? $message : "" ?></p>
+                    <p style="color: red;"><?= isset($error) ? $error : "" ?></p>
+                </div>
+                <input type="text" name="username" required placeholder="Username">
+                <input type="email" name="email" required placeholder="Email">
+                <input type="password" name="password" required placeholder="Password">
+                <button type="submit" class="btn">Register</button>
+                <p style="text-align: center;">Already have an account? <a href="login.php">Login</a></p>
+            </form>
+        </div>
 
     </main>
 </body>
