@@ -14,10 +14,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Montserrat'!important;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
     background: var(--secondary-color);
     color: var(--text-color);
     display: flex;
@@ -305,6 +305,7 @@ th {
 .search-form {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
 }
 
@@ -314,11 +315,12 @@ th {
     border-radius: 5px;
     font-size: 14px;
     background: var(--input-bg);
-    padding: 15px 10px;
+    padding: 10px;
 }
 
 .search-form .btn-search {
     width: 30%;
+    padding: 10px;
     background: var(--primary-color);
     color: white;
     border: none;
@@ -344,3 +346,14 @@ th {
     border-radius: 20px;
 }
 
+.user-header {
+    color: white;
+}
+
+.del {
+    background-color: darkred;
+    padding: 10px;
+    color: white;
+    font-size: 12px;
+    border-radius: 7px;
+}

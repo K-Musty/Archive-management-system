@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
     $search_param = "%" . $search_query . "%";
     $stmt->bind_param("iss", $user_id, $search_param, $search_param);
 } else {
-    $sql = "SELECT filename, filepath, metadata, uploaded_at, file_type FROM documents WHERE user_id = ?";
+    $sql = "SELECT id, filename, filepath, metadata, uploaded_at, file_type FROM documents WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
 }
@@ -47,7 +47,7 @@ $result = $stmt->get_result();
 
 <body>
     <header style="width: 80%;margin: auto;text-align: center;background-color: #008080;">
-        <h1>Welcome, <?php echo htmlspecialchars(ucfirst($username)); ?>!</h1>
+        <h1 class="user-header">Welcome, <?php echo htmlspecialchars(ucfirst($username)); ?>!</h1>
         <nav style="display: flex;">
             <a href="upload.php" class="btn">Upload Document</a>
             <a href="logout.php" class="btn btn-danger">Logout</a>
@@ -71,18 +71,18 @@ $result = $stmt->get_result();
                         <th>Filename</th>
                         <th>Metadata</th>
                         <th>Uploaded Date</th>
+                        <th>Action</th>
                         <th>Download</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td>
-                                <img src="icons/<?php echo htmlspecialchars($row["file_type"]); ?>" alt="icon" class="icon">
-                            </td>
+                            <td><img src="icons/<?php echo htmlspecialchars($row["file_type"]); ?>" alt="icon" class="icon"></td>
                             <td><?php echo htmlspecialchars($row["filename"]); ?></td>
                             <td><?php echo strlen($row["metadata"]) > 90 ? $row["metadata"] : $row["metadata"]; ?></td>
                             <td><?php echo date("d M Y, H:i", strtotime($row["uploaded_at"])); ?></td>
+                            <td><a href="delete.php?id=<?php echo htmlspecialchars($row["id"]); ?>" class="del">Del</a></td>
                             <td><a href="<?php echo $row["filepath"]; ?>" download class="btn btn-download">Download</a></td>
                         </tr>
                     <?php endwhile; ?>
