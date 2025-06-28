@@ -1,7 +1,12 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 require __DIR__ . '/db.php';
 
+// Redirect if user not logged in or role not 'user'
 if (!isset($_SESSION["user_id"]) || $_SESSION["role"] != "user") {
     header("Location: index.php");
     exit();
@@ -11,22 +16,30 @@ $user_id = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 $search_query = "";
 
-// Fetch documents uploaded by the user, with search functionality
+// Prepare SQL with or without search
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
     $search_query = trim($_POST["search"]);
     $sql = "SELECT filename, filepath, metadata, uploaded_at FROM documents 
             WHERE user_id = ? AND (filename LIKE ? OR metadata LIKE ?)";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
     $search_param = "%" . $search_query . "%";
     $stmt->bind_param("iss", $user_id, $search_param, $search_param);
 } else {
-    $sql = "SELECT filename, filepath, metadata, uploaded_at, file_type FROM documents WHERE user_id = ?";
+    $sql = "SELECT filename, filepath, metadata, uploaded_at FROM documents WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
     $stmt->bind_param("i", $user_id);
 }
 
 $stmt->execute();
 $result = $stmt->get_result();
+?>
+
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +53,7 @@ $result = $stmt->get_result();
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Monstserrat';
+            font-family: 'Montserrat';
         }
     </style>
 </head>
@@ -76,14 +89,16 @@ $result = $stmt->get_result();
                 </thead>
                 <tbody>
                     <?php while ($row = $result->fetch_assoc()): ?>
+                        <?php
+                            $ext = strtolower(pathinfo($row["filename"], PATHINFO_EXTENSION));
+                            $iconFile = $ext . ".png"; // e.g., pdf.png, docx.png
+                        ?>
                         <tr>
-                            <td>
-                                <img src="icons/<?php echo htmlspecialchars($row["file_type"]); ?>" alt="icon" class="icon">
-                            </td>
+                            <td><img src="icons/<?php echo htmlspecialchars($iconFile); ?>" alt="icon" class="icon" /></td>
                             <td><?php echo htmlspecialchars($row["filename"]); ?></td>
-                            <td><?php echo strlen($row["metadata"]) > 90 ? $row["metadata"] : $row["metadata"]; ?></td>
+                            <td><?php echo htmlspecialchars($row["metadata"]); ?></td>
                             <td><?php echo date("d M Y, H:i", strtotime($row["uploaded_at"])); ?></td>
-                            <td><a href="<?php echo $row["filepath"]; ?>" download class="btn btn-download">Download</a></td>
+                            <td><a href="<?php echo htmlspecialchars($row["filepath"]); ?>" download class="btn btn-download">Download</a></td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>

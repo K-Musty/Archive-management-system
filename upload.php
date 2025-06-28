@@ -31,9 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["file"])) {
     if (move_uploaded_file($file_tmp, $upload_dir)) {
         $metadata = $_POST["metadata"];
         $user_id = $_SESSION["user_id"];
-        $sql = "INSERT INTO documents (user_id, filename, filepath, metadata, file_type) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO documents (user_id, filename, filepath, metadata) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("issss", $user_id, $file_name, $upload_dir, $metadata, $file_type);
+        $stmt->bind_param("isss", $user_id, $file_name, $upload_dir, $metadata);
         $stmt->execute();
         header("Location: dashboard.php");
     } else {
